@@ -9,7 +9,7 @@ missingKC = []
 keymapToCheck = ""
 keycodesToCheck = {}
 
-#Read in keycodes that ypu want to check for in a keymap as a set
+#Read in keycodes that you want to check for in a keymap as a set
 with open(file1, 'r') as keycodes:
     keycodesToCheck = set(keycode.strip() for keycode in keycodes)
 
