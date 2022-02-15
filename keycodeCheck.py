@@ -1,26 +1,21 @@
 import sys
 
 #Access arguments that were used during the scipt call
-file1 = sys.argv[1]
-file2 = sys.argv[2]
+keycodeFile = sys.argv[1]
+keymapFile = sys.argv[2]
 
-#Initialise variables to make this less confusing for me
-missingKC = []
-keymapToCheck = ""
-keycodesToCheck = {}
-
-#Read in keycodes that ypu want to check for in a keymap as a set
-with open(file1, 'r') as keycodes:
+#Read in keycodes that are required
+with open(keycodeFile, 'r') as keycodes:
     keycodesToCheck = set(keycode.strip() for keycode in keycodes)
 
-#Read in the keymap you want to check as one long string
-with open(file2, 'r') as keymap:
+#Read in the keymap that needs to be checked
+with open(keymapFile, 'r') as keymap:
     keymapToCheck = keymap.read()
 
-#Check for each keycode in the string and push any missing keycodes into the array
-for keycode in keycodesToCheck:
-    if not keycode in keymapToCheck:
-        missingKC.append(keycode)
+#Split on whitespace and remove commas to isolate keycodes
+keymapParsed = set([i.strip(",") for i in keymapToCheck.split()])
 
-#Write out the array of missing keycodes. You could pipe this to a file
-sys.stdout.write(str(missingKC))
+#Check keymap against keycode list and print out items that are in the keycode list but missing from the keymap. 
+#Formatted to a line per keycode.
+for element in keycodesToCheck - keymapParsed:
+    print(element)
